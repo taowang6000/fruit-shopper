@@ -235,76 +235,123 @@ const UserType = new GraphQLObjectType({
   })
 })
 
-let schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'RootQueryType',
-    fields: {
-      order: {
-        type: OrderType,
-        args: {
-          id: {
-            type: new GraphQLNonNull(GraphQLInt)
-          }
-        },
-        resolve(parent, args) {
-          return Order.findByPk(args.id)
+const RootQuery = new GraphQLObjectType({
+  name: 'RootQueryType',
+  fields: {
+    order: {
+      type: OrderType,
+      args: {
+        id: {
+          type: new GraphQLNonNull(GraphQLInt)
         }
       },
-      orders: {
-        type: new GraphQLList(OrderType),
-        resolve(parent, args) {
-          return Order.findAll()
+      resolve(parent, args) {
+        return Order.findByPk(args.id)
+      }
+    },
+    orders: {
+      type: new GraphQLList(OrderType),
+      resolve(parent, args) {
+        return Order.findAll()
+      }
+    },
+    user: {
+      type: UserType,
+      // args will automatically be mapped to `where`
+      args: {
+        id: {
+          description: 'id of the user',
+          type: new GraphQLNonNull(GraphQLInt)
         }
       },
-      user: {
-        type: UserType,
-        // args will automatically be mapped to `where`
-        args: {
-          id: {
-            description: 'id of the user',
-            type: new GraphQLNonNull(GraphQLInt)
-          }
-        },
-        resolve(parent, args) {
-          return User.findByPk(args.id)
+      resolve(parent, args) {
+        return User.findByPk(args.id)
+      }
+    },
+    users: {
+      type: new GraphQLList(UserType),
+      resolve(parent, args) {
+        return User.findAll()
+      }
+    },
+    product: {
+      type: ProductType,
+      args: {
+        id: {
+          type: new GraphQLNonNull(GraphQLInt)
         }
       },
-      users: {
-        type: new GraphQLList(UserType),
-        resolve(parent, args) {
-          return User.findAll()
+      resolve(parent, args) {
+        return Product.findByPk(args.id)
+      }
+    },
+    products: {
+      type: new GraphQLList(ProductType),
+      resolve(parent, args) {
+        return Product.findAll()
+      }
+    },
+    category: {
+      type: CategoryType,
+      args: {
+        id: {
+          type: new GraphQLNonNull(GraphQLInt)
         }
       },
-      product: {
-        type: ProductType,
-        args: {
-          id: {
-            type: new GraphQLNonNull(GraphQLInt)
-          }
-        },
-        resolve(parent, args) {
-          return Product.findByPk(args.id)
-        }
-      },
-      products: {
-        type: new GraphQLList(ProductType),
-        resolve(parent, args) {
-          return Product.findAll()
-        }
-      },
-      category: {
-        type: CategoryType,
-        args: {
-          id: {
-            type: new GraphQLNonNull(GraphQLInt)
-          }
-        },
-        resolve(parent, args) {
-          return Category.findByPk(args.id)
-        }
+      resolve(parent, args) {
+        return Category.findByPk(args.id)
       }
     }
-  })
+  }
 })
 
-module.exports = schema
+const Mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    addProduct: {
+      type: ProductType,
+      args: {
+        name: {type: new GraphQLNonNull(GraphQLString)},
+        price: {type: GraphQLFloat},
+        quantity: {type: GraphQLInt},
+        description: {type: GraphQLString},
+        image: {type: GraphQLString},
+        available: {type: GraphQLBoolean}
+      },
+      resolve(parent, args) {
+        return Product.create(args)
+      }
+    },
+    updateProduct: {
+      type: ProductType,
+      args: {
+        name: {type: new GraphQLNonNull(GraphQLString)},
+        price: {type: GraphQLFloat},
+        quantity: {type: GraphQLInt},
+        description: {type: GraphQLString},
+        image: {type: GraphQLString},
+        available: {type: GraphQLBoolean}
+      },
+      async resolve(parent, args) {
+        let theProduct = await Product.findByPk(parent.id)
+        return theProduct.update(args)
+      }
+    },
+    deleteProduct: {
+      type: ProductType,
+      args: {
+        id: {type: new GraphQLNonNull(GraphQLInt)}
+      },
+      resolve(parent, args) {
+        return Product.destroy({
+          where: {id: args.id}
+        })
+      }
+    }
+  }
+})
+
+module.exports = new GraphQLSchema({
+  query: RootQuery,
+  mutation: Mutation
+})

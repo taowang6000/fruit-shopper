@@ -14,6 +14,8 @@ const socketio = require('socket.io')
 // imported for graphql
 const graphqlHTTP = require('express-graphql')
 const schema = require('./db/schema')
+// allow cross-origin requests
+// const cors = require('cors')
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
@@ -45,6 +47,9 @@ passport.deserializeUser(async (id, done) => {
 })
 
 const createApp = () => {
+  // allow cross-origin requests
+  // app.use(cors)
+
   // logging middleware
   app.use(morgan('dev'))
 
