@@ -5,7 +5,6 @@ const {
   GraphQLInt,
   GraphQLNonNull,
   GraphQLList,
-  GraphQLEnumType,
   GraphQLFloat,
   GraphQLBoolean
 } = require('graphql')
@@ -62,22 +61,11 @@ const CategoryType = new GraphQLObjectType({
     },
     products: {
       type: new GraphQLList(ProductType),
-      resolve(parent, args) {
-        let rowsOfJoinTable = CategoryProduct.findAll({
-          where: {
-            categoryId: parent.id
-          }
+      async resolve(parent, args) {
+        let theCat = await Category.findByPk(parent.id, {
+          include: [Product]
         })
-        let productsIdArr = rowsOfJoinTable.data.reduce((result, row) => {
-          if (!result.includes(row.productId)) result.push(row.prodcutId)
-        }, [])
-        return Product.findAll({
-          where: {
-            id: {
-              [Op.in]: productsIdArr
-            }
-          }
-        })
+        return theCat.dataValues.products
       }
     }
   })
@@ -119,22 +107,25 @@ const ProductType = new GraphQLObjectType({
     },
     categories: {
       type: new GraphQLList(CategoryType),
-      resolve(parent, args) {
-        let rowsOfJoinTable = CategoryProduct.findAll({
+      async resolve(parent, args) {
+        let rowsOfJoinTable = await CategoryProduct.findAll({
           where: {
             productId: parent.id
           }
         })
-        let catsIdArr = rowsOfJoinTable.data.reduce((result, row) => {
-          if (!result.includes(row.categoryId)) result.push(row.categoryId)
+        let catsIdArr = rowsOfJoinTable.reduce((result, row) => {
+          if (!result.includes(row.dataValues.categoryId))
+            result.push(row.dataValues.categoryId)
+          return result
         }, [])
-        return Category.findAll({
+        let result = await Category.findAll({
           where: {
             id: {
               [Op.in]: catsIdArr
             }
           }
         })
+        return result
       }
     }
   })
@@ -176,6 +167,15 @@ const OrderType = new GraphQLObjectType({
     },
     updatedAt: {
       type: GraphQLString
+    },
+    products: {
+      type: new GraphQLList(ProductType),
+      async resolve(parent, args) {
+        let theOrder = await Order.findByPk(parent.id, {
+          include: [Product]
+        })
+        return theOrder.dataValues.products
+      }
     }
   })
 })
@@ -247,7 +247,7 @@ let schema = new GraphQLSchema({
           }
         },
         resolve(parent, args) {
-          return Order.findbyPk(args.id)
+          return Order.findByPk(args.id)
         }
       },
       orders: {
@@ -269,6 +269,12 @@ let schema = new GraphQLSchema({
           return User.findByPk(args.id)
         }
       },
+      users: {
+        type: new GraphQLList(UserType),
+        resolve(parent, args) {
+          return User.findAll()
+        }
+      },
       product: {
         type: ProductType,
         args: {
@@ -278,6 +284,23 @@ let schema = new GraphQLSchema({
         },
         resolve(parent, args) {
           return Product.findByPk(args.id)
+        }
+      },
+      products: {
+        type: new GraphQLList(ProductType),
+        resolve(parent, args) {
+          return Product.findAll()
+        }
+      },
+      category: {
+        type: CategoryType,
+        args: {
+          id: {
+            type: new GraphQLNonNull(GraphQLInt)
+          }
+        },
+        resolve(parent, args) {
+          return Category.findByPk(args.id)
         }
       }
     }

@@ -115,9 +115,9 @@ class AdminProducts extends React.Component {
               'top pick',
               'in season'
             ].map(cat => ({
-              key: cat.id,
-              text: cat.name,
-              value: cat.name
+              key: cat,
+              text: cat,
+              value: cat
             }))}
             onChange={evt => this.handleSelectByCat(evt)}
           />

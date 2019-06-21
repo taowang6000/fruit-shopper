@@ -16,6 +16,18 @@ class AllProducts extends React.Component {
     super(props)
     this.numberPerPage = 12
     this.initialState = {isLoading: false, results: [], value: '', page: 1}
+    this.options = [
+      'tropical',
+      'US-grown',
+      'organic',
+      'gift',
+      'top pick',
+      'in season'
+    ].map(cat => ({
+      key: cat,
+      text: cat,
+      value: cat
+    }))
 
     this.state = this.initialState
     this.handleDesPriceReorder = this.handleDesPriceReorder.bind(this)
@@ -95,18 +107,7 @@ class AllProducts extends React.Component {
               </Button>
               <Select
                 placeholder="Select by Category"
-                options={[
-                  'tropical',
-                  'US-grown',
-                  'organic',
-                  'gift',
-                  'top pick',
-                  'in season'
-                ].map(cat => ({
-                  key: cat.id,
-                  text: cat.name,
-                  value: cat.name
-                }))}
+                options={this.options}
                 onChange={evt => this.handleSelectByCat(evt)}
               />
             </div>
