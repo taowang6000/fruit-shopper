@@ -95,7 +95,14 @@ class AllProducts extends React.Component {
               </Button>
               <Select
                 placeholder="Select by Category"
-                options={this.props.categories.map(cat => ({
+                options={[
+                  'tropical',
+                  'US-grown',
+                  'organic',
+                  'gift',
+                  'top pick',
+                  'in season'
+                ].map(cat => ({
                   key: cat.id,
                   text: cat.name,
                   value: cat.name
@@ -147,8 +154,7 @@ class AllProducts extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    products: state.products,
-    categories: state.categories
+    products: state.products
   }
 }
 

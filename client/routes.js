@@ -22,13 +22,7 @@ import {
   SingleOrder,
   Payment
 } from './components'
-import {
-  me,
-  fetchProducts,
-  fetchCategories,
-  fetchOrders,
-  fetchUsers
-} from './store'
+import {me, fetchProducts, fetchOrders, fetchUsers} from './store'
 
 /**
  * COMPONENT
@@ -118,7 +112,6 @@ const mapDispatch = dispatch => {
     loadInitialData() {
       dispatch(me())
       dispatch(fetchProducts())
-      dispatch(fetchCategories())
       dispatch(fetchOrders())
       dispatch(fetchUsers())
     }

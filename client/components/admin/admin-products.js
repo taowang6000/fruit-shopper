@@ -107,7 +107,14 @@ class AdminProducts extends React.Component {
           <Button onClick={this.handleIncPriceReorder}>Ascending Price</Button>
           <Select
             placeholder="Select by Category"
-            options={this.props.categories.map(cat => ({
+            options={[
+              'tropical',
+              'US-grown',
+              'organic',
+              'gift',
+              'top pick',
+              'in season'
+            ].map(cat => ({
               key: cat.id,
               text: cat.name,
               value: cat.name
@@ -157,8 +164,7 @@ class AdminProducts extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    products: state.products,
-    categories: state.categories
+    products: state.products
   }
 }
 
