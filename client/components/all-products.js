@@ -10,6 +10,8 @@ import {
   filterByCategory
 } from '../store/products'
 import {Select, Button, Search, Pagination} from 'semantic-ui-react'
+import gql from 'graphql-tag'
+import {graphql} from 'react-apollo'
 
 class AllProducts extends React.Component {
   constructor(props) {
@@ -92,66 +94,90 @@ class AllProducts extends React.Component {
   }
 
   render() {
-    return (
-      <div id="allProductsPage">
-        <div>
-          <div id="header" />
-          <hr />
-          <div className="descend-ascend-categories-search-outer">
-            <div className="ascending-descending-category-box">
-              <Button onClick={this.handleDesPriceReorder}>
-                Descending Price
-              </Button>
-              <Button onClick={this.handleIncPriceReorder}>
-                Ascending Price
-              </Button>
-              <Select
-                placeholder="Select by Category"
-                options={this.options}
-                onChange={evt => this.handleSelectByCat(evt)}
+    if (this.props.data.loading) {
+      return <div> Loading Products ...</div>
+    } else {
+      console.log('products: ', this.props.data.products)
+      return (
+        <div id="allProductsPage">
+          <div>
+            <div id="header" />
+            <hr />
+            <div className="descend-ascend-categories-search-outer">
+              <div className="ascending-descending-category-box">
+                <Button onClick={this.handleDesPriceReorder}>
+                  Descending Price
+                </Button>
+                <Button onClick={this.handleIncPriceReorder}>
+                  Ascending Price
+                </Button>
+                <Select
+                  placeholder="Select by Category"
+                  options={this.options}
+                  onChange={evt => this.handleSelectByCat(evt)}
+                />
+              </div>
+              <Search
+                className="search-bar"
+                loading={this.state.isLoading}
+                onResultSelect={this.handleResultSelect}
+                onSearchChange={_.debounce(this.handleSearchChange, 500, {
+                  leading: true
+                })}
+                results={this.state.results}
+                value={this.state.value}
               />
             </div>
-            <Search
-              className="search-bar"
-              loading={this.state.isLoading}
-              onResultSelect={this.handleResultSelect}
-              onSearchChange={_.debounce(this.handleSearchChange, 500, {
-                leading: true
-              })}
-              results={this.state.results}
-              value={this.state.value}
+            <hr />
+            {!this.props.data.products ||
+            this.props.data.products.length === 0 ? (
+              <div>No Products!</div>
+            ) : (
+              <Products
+                displayedProducts={this.props.data.products
+                  .filter(product => product.available === true)
+                  .slice(
+                    this.numberPerPage * (this.state.page - 1),
+                    this.numberPerPage * this.state.page
+                  )}
+              />
+            )}
+          </div>
+
+          <div className="pagination-box">
+            <Pagination
+              className="pagination-item"
+              defaultActivePage={1}
+              totalPages={Math.ceil(
+                this.props.data.products.filter(
+                  product => product.available === true
+                ).length / this.numberPerPage
+              )}
+              onPageChange={this.handlePageChange}
             />
           </div>
-          <hr />
-          {!this.props.products || this.props.products.length === 0 ? (
-            <div>No Products!</div>
-          ) : (
-            <Products
-              displayedProducts={this.props.products
-                .filter(product => product.available === true)
-                .slice(
-                  this.numberPerPage * (this.state.page - 1),
-                  this.numberPerPage * this.state.page
-                )}
-            />
-          )}
         </div>
-
-        <div className="pagination-box">
-          <Pagination
-            className="pagination-item"
-            defaultActivePage={1}
-            totalPages={Math.ceil(
-              this.props.products.filter(product => product.available === true)
-                .length / this.numberPerPage
-            )}
-            onPageChange={this.handlePageChange}
-          />
-        </div>
-      </div>
-    )
+      )
+    }
   }
 }
+
+const allProductsQuery = gql`
+  query {
+    products {
+      id
+      image
+      name
+      description
+      price
+      quantity
+      available
+      categories {
+        name
+      }
+    }
+  }
+`
 
 const mapStateToProps = state => {
   return {
@@ -169,4 +195,5 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)
+// export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)
+export default graphql(allProductsQuery)(AllProducts)
