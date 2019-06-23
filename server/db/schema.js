@@ -127,6 +127,15 @@ const ProductType = new GraphQLObjectType({
         })
         return result
       }
+    },
+    orders: {
+      type: new GraphQLList(OrderType),
+      async resolve(parent, args) {
+        let theProduct = await Product.findByPk(parent.id, {
+          include: [Order]
+        })
+        return theProduct.dataValues.orders
+      }
     }
   })
 })

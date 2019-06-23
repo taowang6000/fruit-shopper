@@ -4,6 +4,7 @@ import Products from './products'
 import {Select, Button, Search, Pagination} from 'semantic-ui-react'
 import gql from 'graphql-tag'
 import {graphql} from 'react-apollo'
+import history from '../history'
 
 class AllProducts extends React.Component {
   constructor(props) {
@@ -61,7 +62,8 @@ class AllProducts extends React.Component {
 
   handleResultSelect(evt, {result}) {
     let link = `/products/${result.id}`
-    this.props.toSingleProductPage(link)
+    // this.props.toSingleProductPage(link)
+    history.push(link)
   }
 
   handleSearchChange = (evt, {value}) => {
@@ -102,11 +104,11 @@ class AllProducts extends React.Component {
           break
         case 'des':
           this.products = this.props.data.products
-          this.products.sort((a, b) => a.price - b.price)
+          this.products.sort((a, b) => b.price - a.price)
           break
         case 'inc':
           this.products = this.props.data.products
-          this.products.sort((b, a) => a.price - b.price)
+          this.products.sort((a, b) => a.price - b.price)
           break
         case 'cat':
           this.products = this.props.data.products.filter(elem =>
