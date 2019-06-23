@@ -17,7 +17,17 @@ class AllProducts extends React.Component {
   constructor(props) {
     super(props)
     this.numberPerPage = 12
-    this.initialState = {isLoading: false, results: [], value: '', page: 1}
+    this.selectedCategory = ''
+    // options for displayMethod: 'all', 'des', 'inc', 'cat'
+    this.initialState = {
+      isLoading: false,
+      results: [],
+      value: '',
+      page: 1,
+      displayMethod: 'all'
+    }
+    // products passed for display
+    this.products = []
     this.options = [
       'tropical',
       'US-grown',
@@ -48,16 +58,16 @@ class AllProducts extends React.Component {
   }
 
   handleDesPriceReorder() {
-    this.props.reorderByDesP()
+    this.setState({displayMethod: 'des'})
   }
 
   handleIncPriceReorder() {
-    this.props.reorderByIncP()
+    this.setState({displayMethod: 'inc'})
   }
 
   handleSelectByCat(evt) {
-    this.setState({page: 1})
-    this.props.filterByCat(evt.target.textContent)
+    this.selectedCategory = evt.target.textContent
+    this.setState({displayMethod: 'cat', page: 1})
   }
 
   handleResultSelect(evt, {result}) {
@@ -77,7 +87,7 @@ class AllProducts extends React.Component {
       this.setState({
         isLoading: false,
         results: _.filter(
-          this.props.products.map(product => {
+          this.props.data.products.map(product => {
             return {
               id: product.id,
               name: product.name,
@@ -97,7 +107,26 @@ class AllProducts extends React.Component {
     if (this.props.data.loading) {
       return <div> Loading Products ...</div>
     } else {
-      console.log('products: ', this.props.data.products)
+      switch (this.state.displayMethod) {
+        case 'all':
+          this.products = this.props.data.products
+          break
+        case 'des':
+          this.products = this.props.data.products
+          this.products.sort((a, b) => a.price - b.price)
+          break
+        case 'inc':
+          this.products = this.props.data.products
+          this.products.sort((b, a) => a.price - b.price)
+          break
+        case 'cat':
+          this.products = this.props.data.products.filter(elem =>
+            elem.categories.some(cat => cat.name === this.selectedCategory)
+          )
+          break
+        default:
+          this.products = this.props.data.products
+      }
       return (
         <div id="allProductsPage">
           <div>
@@ -129,12 +158,11 @@ class AllProducts extends React.Component {
               />
             </div>
             <hr />
-            {!this.props.data.products ||
-            this.props.data.products.length === 0 ? (
+            {!this.products || this.products.length === 0 ? (
               <div>No Products!</div>
             ) : (
               <Products
-                displayedProducts={this.props.data.products
+                displayedProducts={this.products
                   .filter(product => product.available === true)
                   .slice(
                     this.numberPerPage * (this.state.page - 1),
@@ -149,9 +177,8 @@ class AllProducts extends React.Component {
               className="pagination-item"
               defaultActivePage={1}
               totalPages={Math.ceil(
-                this.props.data.products.filter(
-                  product => product.available === true
-                ).length / this.numberPerPage
+                this.products.filter(product => product.available === true)
+                  .length / this.numberPerPage
               )}
               onPageChange={this.handlePageChange}
             />
@@ -196,4 +223,19 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 // export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)
-export default graphql(allProductsQuery)(AllProducts)
+export default graphql(
+  allProductsQuery, // the query parameter
+  {
+    // the options parameter
+    props: ({ownProps, data}) => {
+      let sortProduct = function(products) {
+        let copy = products.slice()
+        return copy.sort()
+      }
+      return {
+        data,
+        sortProduct
+      }
+    }
+  }
+)(AllProducts)
