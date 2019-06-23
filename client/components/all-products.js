@@ -1,14 +1,6 @@
 import _ from 'loadsh'
 import React from 'react'
-// import {Navbar} from '../components'
-import {connect} from 'react-redux'
 import Products from './products'
-import {
-  fetchProducts,
-  reorderByDesPrice,
-  reorderByIncPrice,
-  filterByCategory
-} from '../store/products'
 import {Select, Button, Search, Pagination} from 'semantic-ui-react'
 import gql from 'graphql-tag'
 import {graphql} from 'react-apollo'
@@ -48,9 +40,6 @@ class AllProducts extends React.Component {
     this.handleSearchChange = this.handleSearchChange.bind(this)
     this.handleResultSelect = this.handleResultSelect.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
-  }
-  componentDidMount() {
-    // this.props.fetchInitialProducts()
   }
 
   handlePageChange(evt, data) {
@@ -206,36 +195,4 @@ const allProductsQuery = gql`
   }
 `
 
-const mapStateToProps = state => {
-  return {
-    products: state.products
-  }
-}
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    reorderByDesP: () => dispatch(reorderByDesPrice()),
-    reorderByIncP: () => dispatch(reorderByIncPrice()),
-    filterByCat: category => dispatch(filterByCategory(category)),
-    fetchInitialProducts: () => dispatch(fetchProducts()),
-    toSingleProductPage: link => dispatch(() => ownProps.history.push(link))
-  }
-}
-
-// export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)
-export default graphql(
-  allProductsQuery, // the query parameter
-  {
-    // the options parameter
-    props: ({ownProps, data}) => {
-      let sortProduct = function(products) {
-        let copy = products.slice()
-        return copy.sort()
-      }
-      return {
-        data,
-        sortProduct
-      }
-    }
-  }
-)(AllProducts)
+export default graphql(allProductsQuery)(AllProducts)
