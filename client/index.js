@@ -19,10 +19,15 @@ toast.configure()
 import './socket'
 
 // apollo client setup
-// const link = new HttpLink({uri: 'http://localhost:8080/graphql'})
-const link = new HttpLink({
-  uri: 'https://graphql-fruit-shopper.herokuapp.com/graphql'
-})
+let link
+if (process.env.SWITCH_TO === 'heroku') {
+  link = new HttpLink({
+    uri: 'https://graphql-fruit-shopper.herokuapp.com/graphql'
+  })
+} else {
+  link = new HttpLink({uri: 'http://localhost:8080/graphql'})
+}
+
 const cache = new InMemoryCache()
 export const client = new ApolloClient({
   link,
