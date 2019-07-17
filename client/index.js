@@ -20,7 +20,7 @@ import './socket'
 
 // apollo client setup
 let link
-if (process.env.SWITCH_TO === 'heroku') {
+if (process.env.SWITCH_TO && process.env.SWITCH_TO === 'heroku') {
   link = new HttpLink({
     uri: 'https://graphql-fruit-shopper.herokuapp.com/graphql'
   })
