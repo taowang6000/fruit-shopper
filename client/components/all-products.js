@@ -27,7 +27,8 @@ class AllProducts extends React.Component {
       'organic',
       'gift',
       'top pick',
-      'in season'
+      'in season',
+      'all'
     ].map(cat => ({
       key: cat,
       text: cat,
@@ -57,7 +58,11 @@ class AllProducts extends React.Component {
 
   handleSelectByCat(evt) {
     this.selectedCategory = evt.target.textContent
-    this.setState({displayMethod: 'cat', page: 1})
+    if (this.selectedCategory === 'all') {
+      this.setState({displayMethod: 'all', page: 1})
+    } else {
+      this.setState({displayMethod: 'cat', page: 1})
+    }
   }
 
   handleResultSelect(evt, {result}) {
@@ -180,8 +185,10 @@ class AllProducts extends React.Component {
   }
 }
 
+// including the keyword "query" as operation type and "allProducts" as operation name
+//  operation name is encouraged because it is very helpful for debugging and server-side logging
 const allProductsQuery = gql`
-  query {
+  query allProducts {
     products {
       id
       image
