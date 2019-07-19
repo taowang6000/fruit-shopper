@@ -120,203 +120,203 @@ const fruitInfo = [
     name: 'Apple',
     description:
       'Apples are a relatively high-carbohydrate fruit and their   most significant nutrient is vitamin C.',
-    image: '../img/apple.png'
+    image: '/img/apple.png'
   },
   {
     name: 'Avocado',
     description:
       'Avocados are extremely nutrient-dense, and they are rich in fiber, protein, vitamins, and minerals.',
-    image: '../img/avocado.png'
+    image: '/img/avocado.png'
   },
   {
     name: 'Banana',
     description:
       'Bananas are one of the most popular types of fruit in the world, and they have a very sweet taste.',
-    image: '../img/banana.png'
+    image: '/img/banana.png'
   },
   {
     name: 'Blackberries',
     description:
       'The fruit has a sweet and succulent taste despite being relatively low in fructose compared to most types of fruit.',
-    image: '../img/blackberries.png'
+    image: '/img/blackberries.png'
   },
   {
     name: 'Blueberries',
     description:
       'They are certainly rich in health-protective polyphenols, and they offer a decent selection of vitamins and minerals too.',
-    image: '../img/bluberries.png'
+    image: '/img/bluberries.png'
   },
   {
     name: 'Cherry',
     description: 'The cherry is a small fruit with a sweet and juicy taste.',
-    image: '../img/cherry.png'
+    image: '/img/cherry.png'
   },
   {
     name: 'Cranberry',
     description:
       'Cranberries are a small edible berry with a bright red color. Due to their sour nature, they are usually available in their dried form and contain added sugar.',
-    image: '../img/cranberries.png'
+    image: '/img/cranberries.png'
   },
   {
     name: 'Durian',
     description:
       'Known for its peculiar scent, the durian is a giant-sized tropical fruit that’s native to South-East Asia. They are one of the only fruits to contain a decent amount of carbohydrate and fat.',
-    image: '../img/durian.png'
+    image: '/img/durian.png'
   },
   {
     name: 'Grape',
     description:
       'Grapes are one of the most prevalent types of fruit and one of the highest-sugar fruits.',
-    image: '../img/grape.png'
+    image: '/img/grape.png'
   },
   {
     name: 'Grapefruit',
     description:
       'Grapefruit is a large citrus fruit, and it has bitter, sour, but a little bit sweet taste.',
-    image: '../img/grapefruit.png'
+    image: '/img/grapefruit.png'
   },
   {
     name: 'Guava',
     description:
       'guavas are an exceptional provider of vitamin C – just one small fruit supplies 209% of the RDA.',
-    image: '../img/guava.png'
+    image: '/img/guava.png'
   },
   {
     name: 'Jackfruit',
     description: 'Jackfruit is the largest tree fruit in the world.',
-    image: '../img/jackfruit.png'
+    image: '/img/jackfruit.png'
   },
   {
     name: 'Kiwi',
     description:
       'Kiwifruit is a soft, green and juicy edible fruit, and it has the alternate name of ‘Chinese gooseberry’.',
-    image: '../img/kiwi.png'
+    image: '/img/kiwi.png'
   },
   {
     name: 'Lemon',
     description:
       'Lemons are a famous culinary fruit and hold value for cleaning uses.',
-    image: '../img/lemon.png'
+    image: '/img/lemon.png'
   },
   {
     name: 'Lime',
     description:
       'Very close in nature to lemons, the lime is another sour citrus fruit. They both have a slight difference in flavor – lemons are slightly more tart, while limes are bitter.',
-    image: '../img/lime.png'
+    image: '/img/lime.png'
   },
   {
     name: 'Longan',
     description:
       'Longan fruits have a soft and smooth texture inside their skin, and they are extremely juicy. The taste is very sweet.',
-    image: '../img/longan.png'
+    image: '/img/longan.png'
   },
   {
     name: 'Lychee',
     description:
       'The lychee is a tropical fruit almost identical in nature to rambutan and longan fruit.',
-    image: '../img/lychee.png'
+    image: '/img/lychee.png'
   },
   {
     name: 'Mango',
     description:
       'Mangoes contain a stone (making them a drupe) surrounded by sweet yellow flesh; this taste is slightly sweet, soft, and tangy.',
-    image: '../img/mango.png'
+    image: '/img/mango.png'
   },
   {
     name: 'Melon',
     description:
       'Sticking with the higher sugar fruits, melon is another sweet-tasting fleshy fruit.',
-    image: '../img/melon.png'
+    image: '/img/melon.png'
   },
   {
     name: 'Mulberry',
     description:
       'There are many different kinds of mulberry, but there are three main varieties; black, red, and white.',
-    image: '../img/mulberry.png'
+    image: '/img/mulberry.png'
   },
   {
     name: 'Orange',
     description:
       'The orange is a citrus fruit and, and has a tough outer peel that encases the soft, juicy center.',
-    image: '../img/orange.png'
+    image: '/img/orange.png'
   },
   {
     name: 'Papaya',
     description:
       'Papayas have a striking appearance, and look like a cross between a giant pear and butternut squash. In terms of flavor, they are not dissimilar to mangoes but they are less sweet in nature. ',
-    image: '../img/papaya.png'
+    image: '/img/papaya.png'
   },
   {
     name: 'Passion Fruit',
     description:
       'Passion fruit is one of the more unique fruits, and it is about the size of a golf ball. A hard, brown outer shell surrounds a yellow, gelatinous sticky, and sweet flesh.',
-    image: '../img/passionfruit.png'
+    image: '/img/passionfruit.png'
   },
   {
     name: 'Pear',
     description:
       'Pears have the sweetness of an apple mixed with a kind of mild, citrus-like flavor and smell. The flesh is crunchy as you bite into it, with a large amount of water locked inside.',
-    image: '../img/pear.png'
+    image: '/img/pear.png'
   },
   {
     name: 'Persimmon',
     description:
       'Persimmons are a commonly available fruit and the typical cultivars are native to East Asia; particularly China, Japan, and Korea.',
-    image: '../img/persimmon.png'
+    image: '/img/persimmon.png'
   },
   {
     name: 'Pineapple',
     description:
       'Pineapples are a sweet and slightly sour tropical fruit originating from South America. Pineapples have a firm yellow flesh that supplies a juicy, sweet taste.',
-    image: '../img/pineapple.png'
+    image: '/img/pineapple.png'
   },
   {
     name: 'Plum',
     description:
       'Plums are a small and round purple fruit that have origins in China.',
-    image: '../img/plum.png'
+    image: '/img/plum.png'
   },
   {
     name: 'Pomegranate',
     description:
       'Pomegranates are unique in appearance and taste. Inside the pomegranate, we can find hundreds of red edible seeds (known as arils) separated into different chambers by a white stringy material called albedo.',
-    image: '../img/pomegranate.png'
+    image: '/img/pomegranate.png'
   },
   {
     name: 'Rambutan',
     description:
       'This fruit has a bright red outer skin that is covered in red and green spiky hairs.While the skin feels dry and leathery, the flesh inside is soft, white and round, and contains a large seed in the middle.',
-    image: '../img/rambutan.png'
+    image: '/img/rambutan.png'
   },
   {
     name: 'Raspberry',
     description:
       'The raspberry has a soft flesh with a slightly sweet and juicy taste.',
-    image: '../img/raspberry.png'
+    image: '/img/raspberry.png'
   },
   {
     name: 'Starfruit',
     description:
       'It is a tropical fruit that is native to South and South-East Asia, and it has a sweet and tart taste.',
-    image: '../img/starfruit.png'
+    image: '/img/starfruit.png'
   },
   {
     name: 'Strawberry',
     description:
       'Strawberries are a soft and sweet-tasting fruit. In addition to their taste, strawberries actually smell sweet too',
-    image: '../img/strawberry.png'
+    image: '/img/strawberry.png'
   },
   {
     name: 'Tomato',
     description:
       'Tomatoes have a thin red skin and their flesh is acidic, slightly sweet, and juicy; in fact, tomatoes have a water content of 94.5%.',
-    image: '../img/tomato.png'
+    image: '/img/tomato.png'
   },
   {
     name: 'Watermelon',
     description:
       'The origin of watermelons is Southern Africa, and it tastes sweet and juicy.',
-    image: '../img/watermelon.png'
+    image: '/img/watermelon.png'
   }
 ]
 

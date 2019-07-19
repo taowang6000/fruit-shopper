@@ -120,6 +120,7 @@ class EditProduct extends React.Component {
       let {name, price, quantity, image, available, description} = this.state
       const products = this.props.products
       const theProduct = products.find(elem => String(elem.id) === productId)
+      console.log('theProduct in editProduct: ', theProduct)
       return (
         <div>
           <div>
@@ -205,7 +206,7 @@ class EditProduct extends React.Component {
           <Select
             placeholder="Select a Category to assign"
             options={this.props.categories.map(cat => ({
-              key: cat.id,
+              key: cat.name,
               text: cat.name,
               value: cat.name
             }))}
@@ -229,7 +230,17 @@ class EditProduct extends React.Component {
 const mapStateToProps = state => {
   return {
     products: state.products,
-    categories: state.categories
+    categories: [
+      'gift',
+      'top pick',
+      'in season',
+      'tropical',
+      'US-grown',
+      'organic'
+    ].map((cat, idx) => ({
+      id: idx + 1,
+      name: cat
+    }))
   }
 }
 const mapDispatchToProps = (dispatch, ownProps) => {

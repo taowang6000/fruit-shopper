@@ -108,12 +108,12 @@ class AdminProducts extends React.Component {
           <Select
             placeholder="Select by Category"
             options={[
-              'tropical',
-              'US-grown',
-              'organic',
               'gift',
               'top pick',
-              'in season'
+              'in season',
+              'tropical',
+              'US-grown',
+              'organic'
             ].map(cat => ({
               key: cat,
               text: cat,
